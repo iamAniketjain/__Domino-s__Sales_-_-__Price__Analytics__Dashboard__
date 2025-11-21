@@ -1,0 +1,108 @@
+table Dominos_Stock_Data
+	lineageTag: 6d1dfe44-67a6-465b-81ef-1c6da6237464
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 524797fa-c469-4c90-8b14-536b85acb62e
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 33e62db5-a1e4-47fd-bd89-e22f4b0a9939
+			defaultHierarchy: LocalDateTable_18a066dc-d707-4f62-8431-408f21f85ab9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Open
+		dataType: double
+		lineageTag: d22a7e3e-38ac-4a6a-8646-7c29d87ed9b8
+		summarizeBy: sum
+		sourceColumn: Open
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column High
+		dataType: double
+		lineageTag: c0b3108f-4f29-44af-ba4a-cd7c97c829bf
+		summarizeBy: sum
+		sourceColumn: High
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Low
+		dataType: double
+		lineageTag: 642b8a72-9d57-4904-aef2-7164277303b8
+		summarizeBy: sum
+		sourceColumn: Low
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Close
+		dataType: double
+		lineageTag: b380261f-82c1-49b5-9f42-46c2da37710a
+		summarizeBy: sum
+		sourceColumn: Close
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Adj Close'
+		dataType: double
+		lineageTag: 25bb143d-4297-48a2-94ef-d07195776f11
+		summarizeBy: sum
+		sourceColumn: Adj Close
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Volume
+		dataType: int64
+		formatString: 0
+		lineageTag: 9424e3b8-e2d5-4615-9773-b70064db1c90
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column Price_change = Dominos_Stock_Data[Close] - Dominos_Stock_Data[Open]
+		lineageTag: f0cbebb5-97d0-4a63-b040-116bbfd2c584
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Volume' = ```
+			SUM(Dominos_Stock_Data[Volume])
+			
+			```
+		formatString: 0
+		lineageTag: 804b7493-2f66-4162-b8cb-235c47b0ab99
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dominos_Stock_Data = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Administrator\Documents\Datamites CDS\project\Dominos_Stock_Data.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date", type date}, {"Open", type number}, {"High", type number}, {"Low", type number}, {"Close", type number}, {"Adj Close", type number}, {"Volume", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

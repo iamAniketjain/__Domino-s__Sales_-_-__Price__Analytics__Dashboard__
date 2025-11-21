@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Dominos"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7a9e8fc4-3588-4729-b912-3c9b06df03dd"
+  }
+}

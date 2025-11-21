@@ -1,0 +1,5 @@
+relationship 33e62db5-a1e4-47fd-bd89-e22f4b0a9939
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dominos_Stock_Data.Date
+	toColumn: LocalDateTable_18a066dc-d707-4f62-8431-408f21f85ab9.Date
+
